@@ -40,7 +40,7 @@ spec:
         memory: "2250Mi"
         cpu: "1250m"
       limits:
-        memory: "4500"
+        memory: "4500Mi"
         cpu: "2500m"      
   - name: git
     image: docker.io/egovio/builder:2-64da60a1-version_script_update-NA
