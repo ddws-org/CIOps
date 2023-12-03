@@ -29,19 +29,19 @@ spec:
         valueFrom:
           secretKeyRef:
             name: jenkins-credentials
-            key: gitReadAccessToken                        
+            key: gitReadAccessToken                                                       
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /root/.docker
       - name: kaniko-cache
-        mountPath: /cache     
+        mountPath: /cache       
     resources:
       requests:
-        memory: "2250Mi"
-        cpu: "1250m"
+        memory: "2500Mi"
+        cpu: "1000m"
       limits:
-        memory: "4500Mi"
-        cpu: "2500m"      
+        memory: "5000Mi"
+        cpu: "2000m"      
   - name: git
     image: docker.io/egovio/builder:2-64da60a1-version_script_update-NA
     imagePullPolicy: IfNotPresent
@@ -52,7 +52,7 @@ spec:
   - name: kaniko-cache
     persistentVolumeClaim:
       claimName: kaniko-cache-claim
-      readOnly: true      
+      readOnly: true         
   - name: jenkins-docker-cfg
     projected:
       sources:
@@ -66,7 +66,7 @@ spec:
         node(POD_LABEL) {
 
             def scmVars = checkout scm
-            String REPO_NAME = env.REPO_NAME ? env.REPO_NAME : "docker.io/dwssio";         
+            String REPO_NAME = env.REPO_NAME ? env.REPO_NAME : "docker.io/egovio";         
             String GCR_REPO_NAME = "asia.gcr.io/digit-egov";
             def yaml = readYaml file: pipelineParams.configFile;
             List<JobConfig> jobConfigs = ConfigParser.parseConfig(yaml, env);
@@ -121,17 +121,13 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
-                                    --build-arg nexusUsername=\$NEXUS_USERNAME \
-                                    --build-arg nexusPassword=\$NEXUS_PASSWORD \
-                                    --build-arg ciDbUsername=\$CI_DB_USER \
-                                    --build-arg ciDbpassword=\$CI_DB_PWD \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
                                     --destination=${image} \
                                     --destination=${gcr_image} \
                                     --no-push=${noPushImage} \
-                                    --cache-repo=dwssio/cache/cache
+                                    --cache-repo=egovio/cache/cache
                                   """  
                                   echo "${image} and ${gcr_image} pushed successfully!!"                              
                                 }
@@ -141,16 +137,12 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
-                                    --build-arg nexusUsername=\$NEXUS_USERNAME \
-                                    --build-arg nexusPassword=\$NEXUS_PASSWORD \
-                                    --build-arg ciDbUsername=\$CI_DB_USER \
-                                    --build-arg ciDbpassword=\$CI_DB_PWD \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
                                     --destination=${image} \
                                     --no-push=${noPushImage} \
-                                    --cache-repo=dwssio/cache/cache
+                                    --cache-repo=egovio/cache/cache
                                 """
                                 echo "${image} pushed successfully!"
                                 }                                
