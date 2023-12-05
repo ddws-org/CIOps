@@ -43,7 +43,7 @@ spec:
         memory: "5000Mi"
         cpu: "2000m"      
   - name: git
-    image: docker.io/naljal/builder:2-64da60a1-version_script_update-NA
+    image: docker.io/egovio/builder:2-64da60a1-version_script_update-NA
     imagePullPolicy: IfNotPresent
     command:
     - cat
