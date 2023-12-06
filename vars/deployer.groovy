@@ -46,6 +46,8 @@ spec:
                         
                         # Optionally, set KUBECONFIG environment variable to use this kubeconfig
                         export KUBECONFIG=/root/.kube/config
+                        echo $KUBECONFIG
+                        cat $KUBECONFIG
                     """
                 }
             }
