@@ -46,11 +46,11 @@ spec:
                         
                         # Optionally, set KUBECONFIG environment variable to use this kubeconfig
                         export KUBECONFIG=/root/.kube/config
-                        echo $KUBECONFIG
-                        cat $KUBECONFIG
                         kubectl config get-contexts
                         kubectl config current-context
                         kubectl get nodes
+                        echo ${KUBECONFIG}
+                        cat ${KUBECONFIG}
                     """
                 }
             }
