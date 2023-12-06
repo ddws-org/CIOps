@@ -49,8 +49,6 @@ spec:
                         kubectl config get-contexts
                         kubectl config current-context
                         kubectl get nodes
-                        echo ${KUBECONFIG}
-                        cat ${KUBECONFIG}
                     """
                 }
             }
