@@ -48,7 +48,6 @@ spec:
                         export KUBECONFIG=/root/.kube/config
                         kubectl config get-contexts
                         kubectl config current-context
-                        cat /root/.kube/config
                         aws-iam-authenticator version
                         kubectl get nodes
                     """
