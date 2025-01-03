@@ -112,6 +112,7 @@ spec:
                                 } 
                                 serviceCategory = buildConfig.getServiceCategoryName();  // Dashboard
                                 buildNum = "${scmVars.VERSION}"; // Dashboard
+                                String reactAppPublicPathArg = env.REACT_APP_PUBLIC_PATH ? "--build-arg REACT_APP_PUBLIC_PATH=${env.REACT_APP_PUBLIC_PATH}" : ""
                                 String noPushImage = env.NO_PUSH ? env.NO_PUSH : false;
                                 echo "ALT_REPO_PUSH ENABLED: ${ALT_REPO_PUSH}"
                                  if(env.ALT_REPO_PUSH.equalsIgnoreCase("true")){
@@ -121,6 +122,7 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
+                                    ${reactAppPublicPathArg} \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
@@ -137,6 +139,7 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
+                                    ${reactAppPublicPathArg} \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
